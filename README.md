@@ -54,8 +54,8 @@ Activate the environment, then install dependencies:
 pip install -r requirements.txt
 ```
 
-Download `weatherAUS.csv` from the public **Rain in Australia** dataset page on Kaggle and place it in the repository root. The dataset is intentionally excluded from Git so that its original source and terms remain explicit.
-
+Download `weatherAUS.csv` from [the public **Rain in Australia** dataset page on Kaggle and place it in the repository root. The dataset is intentionally excluded from Git so that its original source and terms remain explicit.
+](https://www.kaggle.com/datasets/mohamedmahmoud153/weatheraus)
 Train the recommended MLP:
 
 ```bash
