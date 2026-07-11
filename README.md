@@ -2,7 +2,6 @@
 
 A reproducible PyTorch pipeline for predicting whether it will rain tomorrow from the Australian `weatherAUS` tabular dataset. The repository covers preprocessing, model training, validation, batch inference, and two small downstream decision demos.
 
-> This is a predictive demonstration, not an operational weather service. The reported scores come from one stratified random holdout split and should not be interpreted as spatial, temporal, or causal validation.
 
 ## Results at a glance
 
