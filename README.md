@@ -1,10 +1,10 @@
 # RainTomorrow: Australian Rainfall Prediction
 
-A reproducible deep learning pipeline for binary rainfall prediction using the Australian **weatherAUS** dataset.
+A reproducible PyTorch pipeline for binary rainfall prediction using the Australian **weatherAUS** dataset.
 
-This project investigates the performance of different neural network architectures on structured meteorological data and implements a complete machine learning workflow, including data preprocessing, model training, evaluation, probabilistic inference, and downstream decision-making demonstrations.
+This project implements an end-to-end deep learning workflow for predicting whether it will rain tomorrow based on historical meteorological observations. It covers data preprocessing, feature engineering, model training, evaluation, probability inference, and reproducible experimentation.
 
-Rather than serving as an isolated prediction model, this repository is designed as the weather prediction module of a larger intelligent transportation project. The predicted rainfall probabilities will be incorporated as external environmental states in a reinforcement learning framework for dynamic taxi pricing.
+The repository is intended as a reproducible benchmark for tabular weather prediction using PyTorch and provides a modular codebase for future research and model development.
 
 ---
 
@@ -16,8 +16,8 @@ Rather than serving as an isolated prediction model, this repository is designed
 - Class imbalance handling using weighted loss
 - Early stopping and reproducible experiments
 - Batch probability inference
-- Downstream decision-making demonstrations
-- Modular code structure for future research
+- Modular project structure
+- Comprehensive evaluation metrics
 
 ---
 
@@ -32,9 +32,7 @@ Performance was evaluated on a held-out validation set using ROC AUC, Accuracy, 
 | **MLP** | **0.900** | **0.811** | **0.552** | **0.822** | **0.660** |
 | 1D CNN | 0.775 | 0.759 | 0.471 | 0.606 | 0.530 |
 
-The multilayer perceptron (MLP) consistently outperformed the 1D CNN across all evaluation metrics. Since the weatherAUS dataset consists of tabular meteorological variables rather than sequential signals, fully connected architectures are better suited to this prediction task.
-
-Because rainy days represent the minority class, overall accuracy alone is insufficient. ROC AUC, rain-class precision, recall, and F1-score provide a more informative assessment of model performance.
+Among the evaluated models, the multilayer perceptron (MLP) achieved the best overall performance. Since rainy days constitute the minority class, ROC AUC together with rain-class precision, recall, and F1-score provide a more informative assessment than accuracy alone.
 
 ---
 
@@ -44,16 +42,19 @@ Because rainy days represent the minority class, overall accuracy alone is insuf
 weatherAUS.csv
         │
         ▼
+Data Loading
+        │
+        ▼
 Data Cleaning
         │
         ▼
 Missing Value Imputation
         │
         ▼
-Feature Encoding
+Categorical Encoding
         │
         ▼
-Standardization
+Feature Standardization
         │
         ▼
 Train / Validation Split
@@ -63,33 +64,35 @@ PyTorch Models
 (Logistic / MLP / Wide MLP / CNN)
         │
         ▼
-Probability Prediction
+Model Training
         │
         ▼
 Evaluation
         │
         ▼
-Taxi Pricing Demo
-Taxi Dispatch Demo
+Probability Prediction
 ```
 
 ---
 
 # Features
 
-- Median imputation for numerical variables.
-- Mode imputation for categorical variables.
-- One-hot encoding of categorical features.
-- Standardization of numerical variables.
-- Stratified train/validation split.
-- Leakage-safe preprocessing fitted only on training data.
-- Multiple PyTorch model architectures.
-- Weighted binary cross-entropy to mitigate class imbalance.
+- Median imputation for numerical features.
+- Mode imputation for categorical features.
+- One-hot encoding for categorical variables.
+- Standardization of numerical features.
+- Leakage-safe preprocessing fitted only on the training set.
+- Stratified train-validation split.
+- Four PyTorch model architectures:
+  - Logistic Regression
+  - MLP
+  - Wide MLP
+  - 1D CNN
+- Weighted binary cross-entropy for class imbalance.
 - Early stopping based on validation loss.
-- Deterministic random seed for reproducibility.
-- Automated model evaluation.
-- Batch probability inference.
-- Downstream decision simulations.
+- Deterministic random seeds for reproducibility.
+- Batch inference on new datasets.
+- Automatic evaluation and metric export.
 
 ---
 
@@ -101,20 +104,18 @@ Taxi Dispatch Demo
 ├── model.py                   # Neural network architectures
 ├── train.py                   # Model training
 ├── evaluate.py                # Model evaluation
-├── predict.py                 # Batch prediction
-├── taxi_pricing_demo.py       # Pricing demonstration
-├── taxi_dispatch_demo.py      # Dispatch demonstration
+├── predict.py                 # Batch inference
 ├── scripts/
 │   └── make_readme_figures.py
 ├── assets/
-│   ├── model-comparison.png
-│   └── application-examples.png
-└── outputs/
+│   └── model-comparison.png
+├── outputs/
+└── requirements.txt
 ```
 
 ---
 
-# Quick Start
+# Installation
 
 Clone the repository.
 
@@ -131,13 +132,13 @@ python -m venv .venv
 
 Activate the environment.
 
-Windows
+### Windows
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Linux / macOS
+### Linux / macOS
 
 ```bash
 source .venv/bin/activate
@@ -149,7 +150,11 @@ Install dependencies.
 pip install -r requirements.txt
 ```
 
-Download the dataset:
+---
+
+# Dataset
+
+Download the Australian weather dataset from Kaggle:
 
 https://www.kaggle.com/datasets/mohamedmahmoud153/weatheraus
 
@@ -159,11 +164,11 @@ Place
 weatherAUS.csv
 ```
 
-under the project root.
+in the project root directory.
 
 ---
 
-# Train a Model
+# Training
 
 Train the recommended MLP model.
 
@@ -174,7 +179,7 @@ python train.py \
     --batch-size 256
 ```
 
-Other supported architectures include:
+Available models include:
 
 - logistic
 - mlp
@@ -189,7 +194,9 @@ python train.py --model cnn
 
 ---
 
-# Evaluate a Trained Model
+# Model Evaluation
+
+Evaluate a trained model.
 
 ```bash
 python evaluate.py \
@@ -198,9 +205,20 @@ python evaluate.py \
     --save-metrics outputs/mlp_eval.json
 ```
 
+Evaluation metrics include:
+
+- ROC AUC
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
+
 ---
 
 # Batch Prediction
+
+Generate probability predictions for an input dataset.
 
 ```bash
 python predict.py \
@@ -209,43 +227,13 @@ python predict.py \
     --output outputs/mlp_predictions.csv
 ```
 
-The generated CSV appends three new columns:
+The output file appends three new columns.
 
 | Column | Description |
 |---------|-------------|
-| RainTomorrow_probability | Predicted probability of rain |
+| RainTomorrow_probability | Predicted probability of rainfall |
 | RainTomorrow_pred | Binary prediction (0 or 1) |
-| RainTomorrow_pred_label | Human-readable prediction ("Yes" / "No") |
-
----
-
-# Downstream Decision Demonstrations
-
-The repository contains two lightweight demonstrations illustrating how predicted rainfall probabilities can support operational decision making.
-
-![Downstream examples](assets/application-examples.png)
-
-## Dynamic Taxi Pricing
-
-```bash
-python taxi_pricing_demo.py \
-    --predictions outputs/mlp_predictions.csv
-```
-
-This example adjusts fare multipliers according to predicted rainfall probability.
-
----
-
-## Taxi Dispatch
-
-```bash
-python taxi_dispatch_demo.py \
-    --predictions outputs/mlp_predictions.csv
-```
-
-This example simulates dispatch priority under different weather conditions.
-
-These demonstrations are proof-of-concept examples intended to illustrate how probabilistic weather forecasts can be integrated into downstream intelligent transportation systems. They are **not** intended to estimate real-world business performance.
+| RainTomorrow_pred_label | Predicted class label ("Yes" or "No") |
 
 ---
 
@@ -257,7 +245,7 @@ Install matplotlib.
 pip install matplotlib
 ```
 
-Generate all README figures.
+Generate all figures used in the README.
 
 ```bash
 python scripts/make_readme_figures.py
@@ -267,52 +255,75 @@ python scripts/make_readme_figures.py
 
 # Technical Highlights
 
-- PyTorch-based implementation
-- Modular architecture for rapid experimentation
-- Leakage-safe preprocessing
-- Class imbalance mitigation
-- Reproducible random seeds
-- Early stopping
-- Probability prediction
-- JSON metric export
-- CSV batch inference
+- Implemented entirely in PyTorch.
+- Modular architecture for easy experimentation.
+- Leakage-safe preprocessing.
+- Class imbalance mitigation.
+- Early stopping.
+- Reproducible experiments.
+- Batch probability inference.
+- JSON metric export.
+- Lightweight project organization.
 
 ---
 
 # Discussion
 
-## Current Limitations
+The MLP achieved consistently better performance than the CNN across all evaluation metrics.
 
-Several methodological limitations should be considered.
+Although convolutional neural networks are highly effective for image and sequential data, transformed tabular meteorological features do not possess a natural spatial ordering. Consequently, fully connected architectures remain a more suitable choice for this prediction task.
 
-- Random train-validation splitting may leak temporal or location-specific information.
-- Threshold 0.5 is not optimized for deployment objectives.
+The reported results demonstrate that a relatively simple MLP can achieve strong predictive performance when combined with appropriate preprocessing and regularization.
+
+---
+
+# Limitations
+
+Several limitations should be considered.
+
+- Random train-validation splitting may introduce temporal or location-specific information leakage.
+- Only a single random seed is reported.
+- Hyperparameter optimization is limited.
 - Probability calibration has not been evaluated.
-- Results are reported using a single random seed.
-- External validation has not been performed.
-- Median and mode imputation cannot remove potential biases introduced by missing data.
-- CNNs assume ordered feature structures, whereas tabular meteorological variables possess no natural spatial ordering.
+- Threshold 0.5 is not optimized for deployment objectives.
+- External validation on independent weather datasets has not been performed.
+- Median and mode imputation cannot eliminate potential bias caused by missing data.
 
-Therefore, the CNN results should be interpreted as an architectural comparison rather than evidence that convolution is inherently suitable for this dataset.
+Future work should address these limitations through more rigorous validation strategies.
+
+---
+
+# Future Work
+
+Possible extensions include:
+
+- Temporal cross-validation.
+- Geographic hold-out evaluation.
+- Hyperparameter optimization using Optuna.
+- Probability calibration (Platt Scaling or Isotonic Regression).
+- Transformer-based models for tabular data.
+- Feature importance analysis using SHAP.
+- Ensemble learning methods.
+- More comprehensive uncertainty estimation.
 
 ---
 
 # Data and Artifact Policy
 
-The repository intentionally excludes:
+To keep the repository lightweight and comply with the dataset's redistribution policy, the following files are excluded:
 
 - Raw weatherAUS dataset
 - Trained model checkpoints
 - Preprocessing artifacts
 - Large prediction outputs
 
-Only compact evaluation summaries, demonstration reports, and generated figures are retained to keep the repository lightweight while respecting the dataset's redistribution policy.
+Only lightweight evaluation summaries and generated figures are retained.
 
 ---
 
 # Citation
 
-If this repository contributes to your research or project, please cite it appropriately or reference the GitHub repository.
+If this repository contributes to your research, please consider citing or referencing the GitHub repository.
 
 ---
 
@@ -320,4 +331,6 @@ If this repository contributes to your research or project, please cite it appro
 
 No open-source license has currently been assigned.
 
-The source code is provided for research demonstration and portfolio purposes. Reuse or redistribution requires permission from the repository owner. The weatherAUS dataset remains subject to the licensing terms of its original provider.
+The source code is provided for research, educational, and portfolio purposes. Redistribution or commercial reuse requires permission from the repository owner.
+
+The weatherAUS dataset remains subject to the licensing terms of its original provider.
