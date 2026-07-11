@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.vscode/
+.idea/
+
+# Dataset: download separately; do not duplicate third-party data in Git.
+weatherAUS.csv
+
+# Generated training artifacts and large predictions.
+outputs/*.pt
+outputs/*.pkl
+outputs/*predictions*.csv
+
+# Local project notes.
+*.docx

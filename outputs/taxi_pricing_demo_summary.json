@@ -1,0 +1,62 @@
+{
+  "config": {
+    "base_flag_fare": 4.2,
+    "per_km_rate": 1.35,
+    "per_minute_rate": 0.42,
+    "peak_hour_markup": 0.18,
+    "location_pressure_scale": 0.22,
+    "max_weather_markup": 0.55,
+    "price_cap_multiplier": 3.0,
+    "currency": "AUD"
+  },
+  "overall": {
+    "rows": 2500,
+    "avg_price_without_rain_signal": 21.8359,
+    "avg_price_with_rain_signal": 24.9028,
+    "avg_rain_increment": 3.0668,
+    "avg_rain_increment_pct": 14.1085,
+    "max_total_multiplier": 2.17
+  },
+  "by_risk": [
+    {
+      "rain_risk_level": "low",
+      "trips": 1390,
+      "avg_rain_probability": 0.1062,
+      "avg_rain_multiplier": 1.0045,
+      "avg_price_without_rain_signal": 22.0652,
+      "avg_price_with_rain_signal": 22.1629,
+      "avg_rain_increment": 0.0977,
+      "avg_rain_increment_pct": 0.4488
+    },
+    {
+      "rain_risk_level": "moderate",
+      "trips": 374,
+      "avg_rain_probability": 0.4735,
+      "avg_rain_multiplier": 1.1312,
+      "avg_price_without_rain_signal": 21.0878,
+      "avg_price_with_rain_signal": 23.8469,
+      "avg_rain_increment": 2.7591,
+      "avg_rain_increment_pct": 13.1169
+    },
+    {
+      "rain_risk_level": "high",
+      "trips": 280,
+      "avg_rain_probability": 0.6938,
+      "avg_rain_multiplier": 1.2876,
+      "avg_price_without_rain_signal": 21.2013,
+      "avg_price_with_rain_signal": 27.2389,
+      "avg_rain_increment": 6.0377,
+      "avg_rain_increment_pct": 28.7639
+    },
+    {
+      "rain_risk_level": "very_high",
+      "trips": 456,
+      "avg_rain_probability": 0.9174,
+      "avg_rain_multiplier": 1.4756,
+      "avg_price_without_rain_signal": 22.1403,
+      "avg_price_with_rain_signal": 32.6861,
+      "avg_rain_increment": 10.5458,
+      "avg_rain_increment_pct": 47.5612
+    }
+  ]
+}

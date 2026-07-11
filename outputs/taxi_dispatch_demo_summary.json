@@ -1,0 +1,111 @@
+{
+  "config": {
+    "base_fare": 4.2,
+    "per_km_fare": 1.35,
+    "per_minute_fare": 0.42,
+    "vehicle_cost_per_km": 0.42,
+    "driver_time_cost_per_min": 0.2,
+    "relocation_cost_per_km": 0.58,
+    "rain_demand_lift": 0.32,
+    "rain_pickup_penalty": 0.18,
+    "wait_minutes": 15.0,
+    "currency": "AUD"
+  },
+  "overall": {
+    "rows": 2500,
+    "action_changed_share": 0.1128,
+    "avg_reward_with_rain_policy": 11.6728,
+    "avg_reward_no_rain_policy_under_rain": 11.5432,
+    "avg_rain_policy_reward_gain": 0.1295
+  },
+  "action_counts": [
+    {
+      "action": "accept",
+      "count": 1969
+    },
+    {
+      "action": "relocate",
+      "count": 531
+    }
+  ],
+  "by_risk": [
+    {
+      "rain_risk_level": "low",
+      "scenarios": 1390,
+      "avg_rain_probability": 0.1062,
+      "action_changed_share": 0.0741,
+      "avg_reward_with_rain_policy": 11.567,
+      "avg_reward_no_rain_policy_under_rain": 11.5034,
+      "avg_rain_policy_reward_gain": 0.0636
+    },
+    {
+      "rain_risk_level": "moderate",
+      "scenarios": 374,
+      "avg_rain_probability": 0.4735,
+      "action_changed_share": 0.1016,
+      "avg_reward_with_rain_policy": 11.5719,
+      "avg_reward_no_rain_policy_under_rain": 11.477,
+      "avg_rain_policy_reward_gain": 0.0949
+    },
+    {
+      "rain_risk_level": "high",
+      "scenarios": 280,
+      "avg_rain_probability": 0.6938,
+      "action_changed_share": 0.1286,
+      "avg_reward_with_rain_policy": 11.3714,
+      "avg_reward_no_rain_policy_under_rain": 11.227,
+      "avg_rain_policy_reward_gain": 0.1444
+    },
+    {
+      "rain_risk_level": "very_high",
+      "scenarios": 456,
+      "avg_rain_probability": 0.9175,
+      "action_changed_share": 0.2303,
+      "avg_reward_with_rain_policy": 12.2629,
+      "avg_reward_no_rain_policy_under_rain": 11.9132,
+      "avg_rain_policy_reward_gain": 0.3497
+    }
+  ],
+  "by_action_and_risk": [
+    {
+      "rain_risk_level": "high",
+      "action_with_rain_signal": "accept",
+      "count": 209
+    },
+    {
+      "rain_risk_level": "high",
+      "action_with_rain_signal": "relocate",
+      "count": 71
+    },
+    {
+      "rain_risk_level": "low",
+      "action_with_rain_signal": "accept",
+      "count": 1165
+    },
+    {
+      "rain_risk_level": "low",
+      "action_with_rain_signal": "relocate",
+      "count": 225
+    },
+    {
+      "rain_risk_level": "moderate",
+      "action_with_rain_signal": "accept",
+      "count": 297
+    },
+    {
+      "rain_risk_level": "moderate",
+      "action_with_rain_signal": "relocate",
+      "count": 77
+    },
+    {
+      "rain_risk_level": "very_high",
+      "action_with_rain_signal": "accept",
+      "count": 298
+    },
+    {
+      "rain_risk_level": "very_high",
+      "action_with_rain_signal": "relocate",
+      "count": 158
+    }
+  ]
+}
