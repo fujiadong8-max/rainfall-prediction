@@ -293,21 +293,6 @@ Future work should address these limitations through more rigorous validation st
 
 ---
 
-# Future Work
-
-Possible extensions include:
-
-- Temporal cross-validation.
-- Geographic hold-out evaluation.
-- Hyperparameter optimization using Optuna.
-- Probability calibration (Platt Scaling or Isotonic Regression).
-- Transformer-based models for tabular data.
-- Feature importance analysis using SHAP.
-- Ensemble learning methods.
-- More comprehensive uncertainty estimation.
-
----
-
 # Data and Artifact Policy
 
 To keep the repository lightweight and comply with the dataset's redistribution policy, the following files are excluded:
